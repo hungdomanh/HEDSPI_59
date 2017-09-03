@@ -1,0 +1,111 @@
+---------------QUẢN LÍ
+
+1. Thêm xóa sửa Danh sách bác sĩ (số lượng) (có tìm kiếm)
+2. Thêm xóa sửa Danh sách bệnh nhân (số lượng) (có tìm kiếm)
+3. Thêm xóa sửa DAnh sách: Phòng (số lượng)
+4  Thêm xóa sửa DAnh sách: Khoa  (số lượng)
+5  Thêm xóa sửa DAnh sách: Thuốc (số lượng)
+6  Thêm xóa sửa DAnh sách: Bệnh (số lượng)
+7  Thêm xóa sửa DAnh sách: Bệnh Án (số lượng)
+8  Thêm xóa sửa DAnh sách: Đơn Thuốc (số lượng)
+9  Thêm xóa sửa DAnh sách: Hóa Đơn (số lượng) 
+10 Thêm xóa sửa DAnh sách: Users (số lượng từng loại) thời gian hoạt động đến hiện tại
+11. Chỉnh sửa thông tin chung của bệnh viện gồm :
+	Tin tức (Đăng tin, xóa tin)
+	Chính sách chất lượng 
+	Xóa các mục hỏi đáp 
+	Trả lời tin nhắn
+12. In hóa đơn, khám xong -> xuất viện
+
+-----------------XEM, THỐNG KÊ:
+
+Danh sách bệnh nhân có bệnh án, không bệnh án 
+Danh sách bệnh nhân hiện tại đang khám bệnh
+Danh sách bác sĩ đang làm việc và rảnh rỗi
+Số lượng, danh sách bệnh nhân (ngày, tháng) (sắp xếp lớn -> bé)
+Số lượng, danh sách bệnh nhân đã khám n lần 
+Danh sách bác sĩ từng khoa
+Danh sách phòng (trống hay không)
+Những bệnh thường gặp
+Tiền thu được 
+Chi phí khàm chữa bệnh trung bình 1 bệnh nhân
+
+//////
+(bảng bệnh nhân)Cần thêm cột trạng thái bệnh nhân đang trong viện hay không
+(bảng bác sĩ) (bảng phòng) thêm cột trạng thái
+(bảng bệnh)thêm cột mã khoa điều trị 
+(bảng hóa đơn) thêm cột ngày cấp
+Bác sĩ rep lại yêu cầu lịch khám bệnh
+	
+
+BÁC SĨ
+
+1. Chỉnh sửa thông tin cá nhân của tài khoản bác sĩ mình: họ tên, khoa viện, trình độ, số năm trong nghề,….
+2. Theo dõi bệnh nhân tình hình của từng bệnh nhân: tiến trình điều trị, Đang điều trị ở đâu, tình trạng bệnh nhân, đơn thuốc của bệnh nhân mọi thông tin về bệnh nhân: ( cả cái bảng thông tin)
+Ngày vào viện…
+3. Tra cứu thông tin ( xem thông tin)  bệnh nhân, bác sỹ khác, bệnh án, Phòng ( phòng bệnh, phòng….)
+4. Nhận và phản hồi yêu cầu khám bệnh cho bệnh nhân từ quản lý
+5. Hỏi đáp?? Newfeed nơi bác sỹ chia sẻ cảm xúc 
+
+
+------------------------THÔNG TIN BỆNH NHÂN
+ 1. hồ sơ bệnh án 1.
+ 2. hồ sơ bệnh án 2.
+    ......
+ hồ sơ bệnh án n . 
+ thông tin tài khoản .
+
+ ----------------------------hồ sơ bệnh án 
+  kết quả khám bệnh 
+  hẹn khám lại
+  bác sĩ khám bệnh
+  hóa đơn
+  đơn thuốc
+  ngày vào viện . ngày ra viện .
+---------------------------------------đơn thuốc
+   thuốc ----số lượng 
+---------------------------------------bs khám bệnh
+    tt bác sĩ . 
+---------------------------------------hóa đơn .
+   tiền khám bệnh . 
+   tiền thuốc .  
+   ...............
+
+=====================--------------thông tin cá nhân --------
+   tên 
+   sex :\
+   năm sinh
+   quê 
+   sđt
+----------------------------------------------------------------------------------------
+
+-----KHÁCH + BỆNH NHÂN -----------------
+THÔNG TIN BỆNH VIỆN
+KHOA BỆNH 
+DỊCH VỤ HỖ TRỢ. 
+HỎI VÀ ĐÁP
+LIÊN HỆ
+THÔNG TIN CÁ NHÂN
+------------BỆNH THƯỜNG GẶP -----
+  csdl THỐNG KÊ .
+--------------------KHOA BỆNH -------
+ KHOA 
+ TRƯỞNG KHOA . 
+ DANH SÁCH PHÒNG CỦA KHOA .
+
+
+
+
+
+
+
+
+/////   Thêm 
+username của bác sĩ vào bảng users
+username của bệnh nhân vào bảng users
+Tiền khám bệnh trong bảng hoadon chuyển sang NOT NULL
+
+
+Nếu admin thêm vào bảng bệnh nhân, bác sĩ thì trigger thêm vào users
+Nếu khách cập nhật thông tin cá nhân xong thì triger thêm chỉnh userType trong users thành bệnh nhân
+Khi thêm trạng thái bệnh nhân vào thì phải có bảng bệnh nhân đang bệnh và đã đc khám hay chưa

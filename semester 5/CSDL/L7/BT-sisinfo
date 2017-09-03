@@ -1,0 +1,10 @@
+select s.* from student s, takes t where id = sid and sno ='21'
+INTERSECT
+select s.* from student s, takes t where id = sid and sno ='23';
+
+select s.* from student s, takes t where id = sid and sno ='21'
+UNION
+select s.* from student s, takes t where id = sid and sno ='23'; 
+
+with stb_bdr as (select * from student where suburb = 'Bundoora')
+select * from stb_bdr;

@@ -1,0 +1,85 @@
+-- Bai tap . This is comment
+
+
+ alter table "GiangVien" rename to giangvien;
+ alter table "ThamGia" rename to thamgia;
+ alter table "DeTai" rename to detai;
+
+1.
+SELECT * FROM public.giangvien
+where "DiaChi" like 'Hai Bà Trưng%' order by "HoTen" DESC;
+
+2.
+Select giangvien."HoTen", giangvien."DiaChi", giangvien."NgaySinh"
+from giangvien natural join thamgia natural join detai
+where detai."TenDT" ='Tính toán lưới';
+
+3.
+Select giangvien."HoTen", giangvien."DiaChi", giangvien."NgaySinh"
+from giangvien natural join thamgia natural join detai
+where detai."TenDT" ='Phân loại văn bản' or detai."TenDT" ='Dịch tự động Anh Việt';
+
+4.
+select * from giangvien where "GV#" in (select "GV#" from thamgia group by "GV#" having count("DT#") > 1);
+cách 2
+select g.* from giangvien g, thamgia t 
+	where g."GV#" = t."GV#"
+	group by g."GV#"
+	having count(distinct t."DT#") >=2;
+
+5.
+select "HoTen" from giangvien where "GV#" = (
+	select t1.ma from  (select "GV#" as ma, count("DT#") from thamgia group by "GV#") t1 where t1.count >= All (select count("DT#") from thamgia group by "GV#")
+);
+
+6.
+select "TenDT" from detai where "KinhPhi" <= All (select "KinhPhi" from detai group by "DT#");
+
+
+7.
+SELECT giangvien."HoTen", giangvien."NgaySinh", detai."TenDT" 
+FROM giangvien natural join thamgia natural join detai
+where giangvien."DiaChi"='Tây Hồ, Hà Nội';
+//hoặc
+SELECT "HoTen", "NgaySinh", "TenDT" 
+FROM giangvien natural join thamgia natural join detai
+where "DiaChi"='Tây Hồ, Hà Nội';
+
+
+8.
+select "HoTen" from giangvien where "NgaySinh" < '1980-01-01' and "GV#" in (
+	select distinct "GV#" from thamgia where "DT#" = 
+	(
+		select "DT#" from detai where "KinhPhi" = '270'
+	)
+);
+
+9.
+select giangvien."GV#", giangvien."HoTen", t.sum from giangvien join (select "GV#", sum("SoGio") from thamgia group by "GV#") as t on giangvien."GV#" = t."GV#"  ;
+
+10.
+Insert into giangvien ("GV#", "HoTen","DiaChi", "NgaySinh")
+values ('GV06', 'Ngô Tuấn Phong', 'Đống Đa, Hà Nội', '09-08-1986');
+
+11.
+update giangvien 
+set "DiaChi" = 'Tây Hồ, Hà Nội' 
+where "HoTen"='Vũ Tuyết Trinh';
+
+12.
+delete * from thamgia
+	where "GV#" ='GV02';
+
+delete from giangvien
+	where "GV#" ='GV02';
+
+
+Hàm trong SQL
+
+
+select MAX(t.count) as maxcount from  (select "GV#" as ma, count("DT#") from thamgia group by "GV#") t;
+
+select * from giangvien where "GV#" in 
+select t1.ma from  (select "GV#" as ma, count("DT#") from thamgia group by "GV#") t1 where t1.count >= All (select count("DT#") from thamgia group by "GV#");
+
+select "GV#" as ma, count("DT#") >= All from thamgia group by "GV#" ;
