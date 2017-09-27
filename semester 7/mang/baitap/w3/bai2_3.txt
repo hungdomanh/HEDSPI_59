@@ -1,0 +1,15 @@
+Bài 2.
+
+Lỗi Connection refused.
+
+Giải thích: 
+	Do ta đang thử kết nối từ client đến server theo cổng [sin_port   = htons(13)] mà cổng 13 chưa được bật ở server nên client không thể kết nối.
+
+Bài 3.
+
+Chạy lần lượt 2 lệnh: 
+	make byteorder
+	./byteorder
+Kết quả: 
+	x86_64-unknown-linux-gnu: little-endian
+
