@@ -8,7 +8,7 @@
 #include <ctype.h>
 #include <unistd.h>
 
-#define PORT 88881
+#define PORT 8888
 
 void convertToUpperCase(char *sPtr);
 int doIt(int sock);
