@@ -1,0 +1,68 @@
+Bước 1:
+
+Bước 2: 
+	Lần lượt chạy các hàm: 
+		socket()
+		bind()
+		listen()
+	Dừng tại hàm:
+		accept()
+
+Bước 3:
++ Dòng thông tin liên quan đến socket mà server đang nghe:
+	Proto 	 Recv-Q Send-Q    Local Address           Foreign Address         State  
+	...
+	tcp        0      0 	     *:9877                     *:*               LISTEN 
+	...
+
++ Giải thích dòng thông tin socket:
+	- Giao thức kết nối là TCP.
+	- Số byte không được sao chép khi kết nối tới server này: 0.
+	- Số byte không được máy chủ từ xa thừa nhận: 0.
+	- Địa chỉ IP của máy tính địa phương đang chưa được thành lập(kí hiệu là *), cổng đã được thành lập là 9877.
+	- Địa chỉ IP và cổng của client chưa được thành lập.
+	- Trạng thái LISTEN.
+
+Bước 4:
++ 127.0.0.1 là địa chỉ IP địa phương của máy tính. Phải dùng nó để kết nối tới server
+
++ Lần lượt các hàm được gọi ở client và server(server đang trong trạng thái lắng nghe):
+	- CLIENT - socket() - khởi tạo socket
+	- CLIENT - inet_pton()
+	- CLIENT - connect()
+	- SERVER - accept()
+	- CLIENT - str_cli() & SERVER - str_echo()
+
+Bước 5:
++ 2 dòng mới xuất hiện
+	...
+	tcp        0      0 localhost:23345         localhost:59806         ESTABLISHED
+	tcp        0      0 localhost:59806         localhost:23345         ESTABLISHED
+	...
+
+Bước 6: 
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
