@@ -1,0 +1,41 @@
+----------Phần 1: Ngắt tiến trình server
+---Bước 1: 
+	Sau khi tắt tiến trình con: 
+		+ Server: child 6094 terminated
+		+ Client: gửi trả 1 FIN và 1 
+		+ Tín hiệu SIGCHLD được gửi đến tiến trình parent và được xử lý đúng cách
+		+ Client bị dừng ở hàm fgets()
+---Bước 2:
+	Các trạng thái của tiến trình client và server:
+		+ Server: LISTEN 	 		. Vì Server vẫn đang chạy bình thường, chỉ có tiến trình con bị tắt.
+		+ Child Server: FIN_WAIT2   . Vì Kết nối của tiến trình con tới client đang muốn tắt kết nối TCP.
+		+ Client: CLOSE_WAIT 		. Vì client nhận được gói tin FIN và đi vào trạng thái CLOSE_WAIT, sau đó gửi gói tin xác nhận đến client.
+---Bước 3: 
+	Gõ tiếp 1 dòng từ phía client:
+		+ Thông báo ra màn hình: str_cli: server terminated prematurely
+		+ Server sẽ gửi đến một RST cho biết là socket đã đóng.
+		+ Client không thể nhìn thấy vì nó sẽ gọi readline() ngay sau khi gọi writen() và readline sẽ trả về 0(EOF) ngay lập tức.
+
+----------Phần 2: Ngắt máy server(server host)
+---Bước 4: 
+	Chạy client và server trên 2 máy khác nhau.
+---Bước 5: 
+	Khi ngắt máy server: 
+		+ Không có thông điệp gì hiện ra trên các kết nối hiện có.
+		+ Nếu ta nhập 1 dòng nữa trên client, nó sẽ gọi hàm writen() và chặn hàm readline() để đợi phản hồi.
+---Bước 6:
+	Sử dụng tcpdump để quan sát:
+		+ Client sẽ cố gắng gửi lại thông điệp 12 lần cho đến khi nhận được một ACK từ server.
+		+ Sau khoảng 10 phút thì client dừng việc cố gửi thông điệp.
+		+ Có thể có các lỗi: ETIMEDOUT, EHOSTUNREACH, ENETUNREACH.
+
+----------PHẦN 3: Ngắt và khởi động lại server host.
+---Bước 7:
+		+ Thông điệp gửi tới client: ECONNRESET
+		+ Giải thích: Vì khi khởi động lại server, TCP của server sẽ mất thông tin của các kết nối trước. Vì vậy server sẽ trả lại cho client với 1 RST. Client khi nhận được RST sẽ bị chặn hàm readline(), hàm readline() sẽ trả về lỗi ECONNRESET.
+
+
+
+
+
+
