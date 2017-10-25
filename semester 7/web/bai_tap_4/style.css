@@ -1,0 +1,18 @@
+.btn {
+	cursor: pointer;
+}
+
+#count {
+    position: fixed;
+    width: 200px;
+    height: 200px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    border-radius: 50%;
+    border: 2px dotted grey;
+    text-align: center;
+    vertical-align: middle;
+    padding: 59px;
+    font-size: 50px;
+}

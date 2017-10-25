@@ -1,0 +1,27 @@
+.error {
+	color: red;
+	font-size: 90%;
+}
+
+.displayPage-text {
+	text-align: center;
+    color: chocolate;
+}
+
+.data-file {
+	/*box-sizing: content-box !important;*/
+	cursor: pointer;
+}
+
+.data-file:hover {
+	color: #234324;
+	font-weight: 700 !important;
+}
+
+.container {
+    background: aliceblue;
+}
+
+.col-lg-2 {
+	border-right: 1px grey solid; 
+}
