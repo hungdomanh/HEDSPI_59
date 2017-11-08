@@ -1,0 +1,32 @@
+#bai_1 .form-control {
+	width: 60%;
+	margin-left: 20%;
+}
+
+#bai_3 .form-control {
+	width: 20%;
+	margin-left: 40%;
+}
+
+#bai_11 input {
+	width: 80px;
+}
+
+#bai_11 .btn.active {
+	outline: 0;
+    box-shadow: 0 0 0 3px rgba(0,123,255,.25);
+	text-decoration: none;
+}
+
+label {
+	font-size: 25px;
+	font-weight: 900;
+}
+
+.form-control .form-control.form-inline {
+	border: none;
+}
+
+#bai_4, #bai_5 {
+	padding: 0 20%;
+}

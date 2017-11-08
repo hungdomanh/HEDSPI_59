@@ -2,4 +2,10 @@ Nguyễn Nhất Hải hnn@soict
 
 Danh sách: https://docs.google.com/spreadsheets/d/1V8DHctQ56OunMO_McB7zF1Jqv4b56f1NmJ9rVrthMcs/edit#gid=0
 
+ALTER TABLE table_name MODIFY COLUMN col_name VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL;
+
+connect: mysql -u root -p
+
 server mySQL: pass 1
+
+

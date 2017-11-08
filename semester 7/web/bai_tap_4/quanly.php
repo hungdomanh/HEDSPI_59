@@ -1,59 +1,96 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Quan Ly</title>
-	<link rel="shortcut icon" type="image/png" href="https://www.hust.edu.vn/documents/21257/147855/BVP-logo+bk-rgb.jpg/c2f94a78-f713-4af1-b9f0-7f6c4cb94438?t=1483699000000&download=true"/>
+<?php 
+session_start();
 
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="style.css">
+$host = $_SESSION['host'];
+$user = $_SESSION['user'];
+$password = $_SESSION['password'];
+$database = $_SESSION['database'];
+$table = "sinhvien";
 
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
-</head>
-<body>
+// // Create connection
+$conn = mysqli_connect($host, $user, $password, $database);
+if (!$conn) die('Error ' . mysqli_connect_error());
+mysqli_set_charset($conn,"utf8");
 
-<?php echo $user; ?>
-	<table class="table">
-		<thead>
-			<tr>
-				<th>No</th>
-				<th>Họ và tên</th>
-				<th>Ngày tháng năm sinh</th>
-				<th>MSSV</th>
-				<th>Số điện thoại</th>
-				<th>Lớp học</th>
-				<th>Quản lý</th>
-			</tr>
-		</thead>
-		<tfoot>
-			<tr>
-				<th>Add</th>
-				<th></th>
-				<th>Back</th>
-				<th>Next</th>
-			</tr>
-		</tfoot>
-		<tbody>
-			<tr>
-				<td>Cell</td>
-				<td>Cell</td>
-				<td>Cell</td>
-				<td>Cell</td>
-				<td>Cell</td>
-				<td>Cell</td>
-				<td>
-					<button>edit</button>
-					<button>delete</button>
-				</td>
-			</tr>
-		</tbody>
-	</table>
 
-	<!-- Vendor JS -->
-	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.32/jquery.form.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js"></script>
+$method = $_SERVER['REQUEST_METHOD'];
+$request = explode('/', trim($_SERVER['PATH_INFO'],'/'));
 
-</body>
-</html>
+
+switch ($method) {
+	case 'GET':
+		$page = isset($_GET['page']) ? $_GET['page'] : 1;
+		$pageBegin = ($page-1)*20;
+		$pageEnd = ($page)*20;
+		if (!$page) {
+			$pageBegin = 0;
+		}
+		$sql = "SELECT * FROM $table LIMIT 20 OFFSET $pageBegin";
+
+		$result = mysqli_query($conn, $sql);
+		$array_encode = array();
+		$i=0;
+		while ($row = mysqli_fetch_array($result)) {
+			$array_encode[$i]->id = $row["id"];
+			$array_encode[$i]->name  = $row["name"];
+			$array_encode[$i]->class = $row["class"];
+			$array_encode[$i]->phone = $row["phone"];
+			$array_encode[$i]->mssv  = $row["mssv"];
+			$array_encode[$i]->birth = $row["birth"];
+			$i++;
+		}
+
+		echo json_encode($array_encode); 
+		break;
+	case 'PUT':
+		$id = isset($_GET['id']) ? $_GET['id'] : '';
+		$name = isset($_GET['name']) ? $_GET['name'] : '';
+		$class = isset($_GET['class']) ? $_GET['class'] : '';
+		$phone = isset($_GET['phone']) ? $_GET['phone'] : '';
+		$mssv = isset($_GET['mssv']) ? $_GET['mssv'] : '';
+		$birth = isset($_GET['birth']) ? $_GET['birth'] : '';
+		
+		if ($mssv == false) {
+			$mssv = 0;
+		}
+		
+		$sql = "UPDATE $table SET name='$name', birth='$birth', mssv=$mssv, phone='$phone', class='$class' WHERE id=$id";
+		$result = mysqli_query($conn, $sql);
+		
+		echo array_shift($request);
+		break;
+	case 'POST':
+		$id = isset($_POST['id']) ? $_POST['id'] : '';
+		$name = isset($_POST['name']) ? $_POST['name'] : '';
+		$class = isset($_POST['class']) ? $_POST['class'] : '';
+		$phone = isset($_POST['phone']) ? $_POST['phone'] : '';
+		$mssv = isset($_POST['mssv']) ? $_POST['mssv'] : '';
+		$birth = isset($_POST['birth']) ? $_POST['birth'] : '';
+
+		if ($mssv == false) {
+			$mssv = 0;
+		}
+
+		$sql = "INSERT INTO $table (name, birth, mssv, phone, class) VALUES ('$name', '$birth', $mssv, '$phone', '$class')";
+		echo $sql;
+		$result = mysqli_query($conn, $sql);
+		echo array_shift($request);
+		break;
+	case 'DELETE':
+		$id = isset($_GET['id']) ? $_GET['id'] : '';
+		$sql = "delete from $table where id=$id";
+		
+		$result = mysqli_query($conn, $sql);
+
+		echo array_shift($request);
+		break;
+}
+
+
+
+
+// echo json_encode($array_encode);
+
+
+
+?>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>WEEK 5</title>
+	<link rel="shortcut icon" type="image/png" href="../logo.png"/>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+
+</head>
+<body>
+	<div class="container" id="bai_tap_5">
+		<br>
+		<div id="bai_1" class="form-control text-center">
+			<label>Bài tập 1</label>
+			<input type="" name="" class="form-control"> <br>
+			<button class="btn btn-info btn-welcome">Welcome</button>
+		</div>
+		<br><br><br>
+		<div id="bai_2" class="form-control text-center">
+			<label>Bài tập 2</label>
+			<br>
+			<button class="btn btn-primary btn-blue">Xanh</button>
+			<button class="btn btn-danger btn-red">Đỏ</button>
+		</div>
+		<br><br><br>
+		<div id="bai_3" class="form-control text-center">
+			<label>Bài tập 3</label>
+			<br>
+			<select class="form-control">
+				<option>Red</option>
+				<option>Blue</option>
+				<option>Brown</option>
+				<option>Lavender</option>
+			</select>
+		</div>
+		<br><br><br>
+		<div id="bai_4" class="form-control text-center">
+			<label>Bài tập 4</label>
+			<br>
+			<div class="form-inline text-left" >
+				Số ký tự đã gõ: <input id="soKyTu" type="number" name="" min="0" value="0" class="form-control">
+			</div>
+			<br clear="clearfix">
+			<div class="text-left">
+				Nội dung: <br>
+				<textarea id="noiDung" class="form-control">
+
+				</textarea>
+				<br>
+			</div>
+		</div>
+		<br><br><br>
+		<div id="bai_5" class="form-control text-center" >
+			<label>Bài tập 5</label>
+			<br>
+			<div class="form-control form-inline">
+				<input class="form-control" type="button" value="Gửi" onmousemove="window.status = 'Bạn đang di chuyển chuột vào nút'; ">
+				<input class="form-control" onmousemove ="window.status='Bạn đang di chuyển chuột vào textbox';"> 
+			</div>
+			<br>
+			<div class="form-control form-inline">
+				<input class="form-control" type="radio" name="GioiTinh" onmousemove="window.status='Bạn đang di chuyển chuột vào nam';">Nam 
+				<input class="form-control" type="radio" name="GioiTinh" onmousemove="window.status='Bạn đang di chuyển chuột vào nữ';">  Nữ 
+			</div>
+		</div>
+		<br><br><br>
+		<div id="bai_6" class="form-control text-center">
+			<label>Bài tập 6</label>
+			<br>
+			<h4>Bạn hãy nhập vào số lượng và giá:</h4>
+			<div class="form-control form-inline text-center" style="display: block;">
+				Số lượng: <input id="soLuong" class="form-control" name="SoLuong" type="number" min="0" value="0">
+				Đơn giá:<input id="donGia" class="form-control" name="DonGia" type="number" min="0" value="0"> <hr>
+				Thành tiền:<input id="thanhTien" class="form-control" name="ThanhTien"  type="number"> USD
+			</div>
+		</div>
+		<br><br><br>
+		<div id="bai_7" class="form-control text-center">
+			<label>Bài tập 7</label>
+			<br>
+			<div class="form-control form-inline text-center" style="display: block;">
+				Tên :<input class="name form-control" type="text" name="">
+				Tuổi :<input class="age form-control" type="number" name="">
+				<button class="btn btn-default">Submit</button>
+			</div>
+		</div>
+		<br><br><br>
+		<div id="bai_8" class="form-control text-center">
+			<label>Bài tập 8</label>
+			<br>
+			<div class="form-control form-inline text-center" style="display: block;">
+				<input class="form-control page-number" type="number" name="">
+				<button class="btn btn-default">Open Page</button>
+			</div>
+		</div>
+		<br><br><br>
+		<div id="bai_9" class="form-control text-center">
+			<label>Bài tập 9</label>
+			<br>
+			<div>Đã hiển thị</div>
+			<button class="btn btn-default">Update</button>
+		</div>
+		<br><br><br>
+		<div id="bai_10" class="form-control text-center">
+			<label>Bài tập 10</label>
+			<br>
+			<div class="form-control form-inline text-center" style="display: block;">
+				Năm sinh: <input class="form-control" type="number" name="" min="1000" value="1990">
+				Tuổi: <span class="show">27</span>
+			</div>
+		</div>
+		<br><br><br>
+		<div id="bai_11" class="form-control text-center">
+			<label>Bài tập 11</label>
+			<br>
+			<div class="form-control form-inline text-center" style="display: block;">
+				<input class="form-control el1" type="number" name="" value="0">
+				<button class="btn cong active">+</button>
+				<button class="btn tru">-</button>
+				<button class="btn nhan">*</button>
+				<button class="btn chia">/</button>
+				<button class="btn mu">^</button>
+				<input class="form-control el2" type="number" name="" value="0">
+				 = 
+				<input class="form-control result" type="number" name="" value="0">
+			</div>
+		</div>
+		<br><br><br>
+		<div id="bai_12" class="form-control text-center">
+			<label>Bài tập 12</label>
+			<br>
+			<form action="?OK" class="form-control form-inline  text-center" style="display: block;">
+				Name: <input class="form-control" type="text" name="" required="true">
+				Age: <input class="form-control" type="number" name="" required="true">
+				<button class="btn-default btn">Submit</button>
+			</form>
+		</div>
+
+		<br><br><br><br>
+	</div>
+
+
+
+	<!-- Vendor JS -->
+	<!-- <script src="https://code.jquery.com/jquery-latest.min.js"></script> -->
+	<script
+	src="https://code.jquery.com/jquery-3.2.1.min.js"
+	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+	crossorigin="anonymous"></script>
+	<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.32/jquery.form.js"></script> -->
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js"></script> -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+	<script src="main.js" type="text/javascript"></script>
+</body>
+</html>

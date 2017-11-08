@@ -14,21 +14,26 @@
 </head>
 <body>
 	<?php 
+	session_start();
 
 	$host = isset($_POST['host']) ? $_POST['host'] : '';
 	$user = isset($_POST['user']) ? $_POST['user'] : '';
 	$password = isset($_POST['password']) ? $_POST['password'] : '';
 	$database = isset($_POST['database']) ? $_POST['database'] : '';
 
+	$_SESSION['host'] = $host;
+	$_SESSION['user'] = $user;
+	$_SESSION['password'] = $password;
+	$_SESSION['database'] = $database;
 
 	// Create connection
-	$conn = new mysqli($host, $user, $password);
+	$conn = mysqli_connect($host, $user, $password, $database);
 
 	// Check connection
-	if ($conn->connect_error) {
-		die("<div class='alert alert-danger text-center' role='alert'><strong>Connection failed! </strong>" . $conn->connect_error . "</div> " );
+	if (!$conn) {
+		die("<div class='alert alert-danger text-center' role='alert'><strong>Connection failed! </strong>" . $conn->connect_error . "</div> " . "<a class='try-again-text' href='/ketnoi.html'>Try Again</a>");
 	}  else {
-		echo "<div class='alert alert-success text-center' role='alert'><strong>Connected successfully!</strong>Redirecting...</div>";
+		echo "<div class='alert alert-success text-center' role='alert'><strong>Connected successfully! </strong><a href='/quanly.html'>Redirecting...</a></div>";
 	}
 
 	?>
