@@ -9,7 +9,7 @@ var bai8 = $('#bai_8')
 var bai9 = $('#bai_9')
 var bai10 = $('#bai_10')
 var bai11 = $('#bai_11')
-var bai = $('#bai_')
+var bai12 = $('#bai_12')
 
 bai1.find('.btn-welcome').click(function(){
 	alert(bai1.find('input').val());
@@ -31,7 +31,6 @@ bai4.find('#noiDung').on('change input paste keyup', function(){
 	bai4.find('#soKyTu').val($(this).val().length);
 })
 
-
 bai6.find('#donGia, #soLuong, #thanhTien').on('change input paste keyup', function(){
 	bai6.find('#thanhTien').val(bai6.find('#soLuong').val() * bai6.find('#donGia').val());
 })
@@ -50,7 +49,7 @@ bai8.find('.btn-default').on('click', function(){
 		window.open('http://www.google.com');
 	}
 })
-
+$('#bai_tap_5').append('<div class="text-center d-none">Coded by Hung - 20142062</div>');
 // bai9
 function updateTitle(){
 	var d = new Date();
@@ -68,7 +67,6 @@ bai10.find('input').on('change input paste keyup', function(){
 
 // bai 11
 function getValue(){
-
 	var a = Number(bai11.find('.el1').val());
 	var b = Number(bai11.find('.el2').val());
 	var sign = bai11.find('.btn.active').html();
@@ -89,7 +87,6 @@ function getValue(){
 function calculator(result) {
 	bai11.find('.result').val(result);
 }
-
 
 bai11.find('.btn').on('click', function(){
 	$(this).addClass('active').siblings().removeClass('active');
