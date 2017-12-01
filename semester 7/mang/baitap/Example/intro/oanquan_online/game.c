@@ -1,0 +1,177 @@
+#include "game.h"
+
+const int user_move[] = {1, 2, 3, 4, 5};
+const int ai_move[] = {7, 8, 9, 10, 11};
+const int quan[] = {0, 6};
+
+void print_board(int sock, int s[])
+{
+    printf("+---------------------------+\n");
+    printf("|   |%3d|%3d|%3d|%3d|%3d|   |\n", s[1], s[2], s[3], s[4], s[5]);
+    printf("|%3d|-------------------|%3d|\n", s[0], s[6]);
+    printf("|   |%3d|%3d|%3d|%3d|%3d|   |\n", s[11], s[10], s[9], s[8], s[7]);
+    printf("+---------------------------+\n");
+}
+
+int get_direct(int sock, int step)
+{ // 1 if right, -1 if left
+    return step > 0 ? 1 : -1;
+}
+
+int step_transform(int sock, int postion, int direct)
+{
+    return postion * direct;
+}
+
+int check_step_true(int sock, int board[], int step, int side)
+{
+    // if user side = 1, if ai size = 0
+    int list_step[20];
+    int len_list_step = get_list_step_true(sock, board, side, list_step);
+    int i;
+    //int check = 0
+    for (i = 0; i < len_list_step; i++)
+    {
+        if (step == list_step[i])
+            return 1;
+    }
+    return 0;
+}
+
+int get_list_step_true(int sock, int board[], int side, int *list_step)
+{
+    // if user side = 1, if ai size = 0
+    int i, count = 0;
+    if (side == 1)
+    { //user
+        for (i = 0; i < 5; i++)
+            if (board[user_move[i]] != 0)
+            {
+                list_step[count] = user_move[i];
+                list_step[count + 1] = -user_move[i];
+                count += 2;
+            }
+    }
+    if (side == 0)
+    { //ai
+        for (i = 0; i < 5; i++)
+            if (board[ai_move[i]] != 0)
+            {
+                list_step[count] = ai_move[i];
+                list_step[count + 1] = -ai_move[i];
+                count += 2;
+            }
+    }
+    return count - 1;
+}
+
+int get_sum_units(int sock, int board[], int side)
+{
+    // if user side = 1, if ai size = 0
+    int i, sum_units = 0;
+    for (i = 0; i < 5; i++)
+    {
+        if (side == 1)
+            sum_units += board[user_move[i]];
+        else
+            sum_units += board[ai_move[i]];
+    }
+    return sum_units;
+}
+
+int check_board_status(int sock, int board[])
+{
+    // won return 1, not yet return 0
+    if (board[quan[0]] == 0 && board[quan[1]] == 0)
+        return 1;
+    else if (get_sum_units(sock, board, 0) == 0 || get_sum_units(sock, board, 1) == 0)
+        return 1;
+    else
+        return 0;
+}
+
+int get_final_score(int sock, int board[], int side, int score)
+{
+    int i = 0;
+    for (i = 0; i < 5; i++)
+    {
+        if (side == 1)
+            score += board[user_move[i]];
+        else
+            score += board[ai_move[i]];
+    }
+    return score;
+}
+
+int is_quan(int sock, int postion)
+{
+    if (postion == 0 || postion == 1)
+        return 1;
+    return 0;
+}
+
+int move_iter(int sock, int board[], int step, int print)
+{
+    // print = 1 if print board, print = 0 if not
+    int direct = get_direct(sock, step);
+    int postion = step > 0 ? step : -step;
+    if (print)
+        printf("postion:%d direct:%d:\n", postion, direct);
+    int score = 0;
+    int next_postion = 0, next_next_postion = 0;
+    int num_units = board[postion];
+    int matluot = 0;
+    board[postion] = 0;
+    while (!matluot)
+    {
+        if (num_units > 0)
+        {
+            postion += direct;
+            postion = (postion + 12) % 12;
+            num_units--;
+            board[postion] += 1;
+        }
+        if (num_units == 0)
+        {
+            next_postion = (postion + direct) % 12;
+            next_next_postion = (next_postion + direct) % 12;
+            if (is_quan(sock, next_postion) ||
+                (board[next_postion] == 0 && board[next_next_postion] == 0))
+            {
+                matluot = 1;
+                if (print)
+                    printf("***MAT LUOT (Gap O QUAN hoac 2 O TRONG)\n");
+                break;
+            }
+
+            if (board[next_postion] == 0 && board[next_next_postion] > 0)
+            {
+                score += board[next_next_postion];
+                if (print)
+                    printf("an %d:%d, mat luot\n", next_postion, board[next_next_postion]);
+                board[next_next_postion] = 0;
+                matluot = 1;
+                break;
+            }
+
+            if (board[next_postion] > 0)
+            {
+                num_units = board[next_postion];
+                board[next_postion] = 0;
+                postion = next_postion;
+                if (print)
+                {
+                    print_board(sock, board);
+                    printf("***BOC TIEP %d:postion%d-direct%d\n", num_units, postion, direct);
+                    printf("-----------------------------------\n");
+                }
+            }
+        }
+    }
+    if (print)
+    {
+        print_board(sock, board);
+        printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+    }
+    return score;
+}

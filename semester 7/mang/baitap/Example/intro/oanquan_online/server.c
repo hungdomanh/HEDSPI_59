@@ -1,16 +1,25 @@
-#include <sys/socket.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <netdb.h>
-#include <netinet/in.h>
-#include <string.h>
-#include <ctype.h>
-#include <unistd.h>
-
-#define PORT 8888
+#include "transfer.h"
 
 void convertToUpperCase(char *sPtr);
-int doIt(int sock);
+int playGame(int sock);
+
+
+// void print_board(int sock, int s[]);
+// int get_direct(int sock, int step);
+// int step_transform(int sock, int postion, int direct);
+// int check_step_true(int sock, int board[], int step, int side);
+// int get_list_step_true(int sock, int board[], int side, int *list_step);
+// int get_sum_units(int sock, int board[], int side);
+// int check_board_status(int sock, int board[]);
+// int get_final_score(int sock, int board[], int side, int score);
+// int is_quan(int sock, int postion);
+// int move_iter(int sock, int board[], int step, int print);
+
+// int get_user_step(int sock, void);
+// int get_ai_random_step(int sock, void);
+// void stand_alone_game(int sock, void);
+// void start(int sock, void);
+
 
 ////////
 int main(int argc, char const *argv[]) {
@@ -18,7 +27,7 @@ int main(int argc, char const *argv[]) {
     int sockfd, newSockfd, childcount = 0;
     pid_t pid;
     socklen_t cLen;
-    char buffer[256];
+    char buffer[BUFFER_LENGTH];
     
     struct sockaddr_in sAddr, cAddr;
 
@@ -63,11 +72,12 @@ int main(int argc, char const *argv[]) {
             perror("ERROR ON FORK");
             exit(1);
         } else if (pid == 0) {
-            // bzero(buffer, 256);
+            // bzero(buffer, BUFFER_LENGTH);
             close(sockfd);
             
             while(1) {
-                if (doIt(newSockfd) < 0) {
+                toClient(newSockfd, "Play game!\n");
+                if ( playGame(newSockfd) < 0) {
                     close(newSockfd);
                     exit(0);
                 };
@@ -84,7 +94,7 @@ int main(int argc, char const *argv[]) {
             if (pid < 0) perror("ERROR WAIT PROCESS");
             else if (pid == 0) break;
             else childcount--;
-        } 
+        }
     }
     
     close(sockfd);
@@ -101,12 +111,12 @@ void convertToUpperCase(char *sPtr) {
     }
 }
 
-int doIt(int sock) {
+int playGame(int sock) {
     int n;
-    char buffer[256], upperBuffer[256];
-    bzero(buffer, 256);
+    char buffer[BUFFER_LENGTH], upperBuffer[BUFFER_LENGTH];
+    bzero(buffer, BUFFER_LENGTH);
 
-    n = read(sock, (char*)&buffer, 255);
+    n = read(sock, (char*)&buffer, BUFFER_LENGTH-1);
 
     if (n < 0) {
         perror("ERROR READING FROM SOCKET");
@@ -131,13 +141,7 @@ int doIt(int sock) {
 
         convertToUpperCase(upperBuffer);
 
-        printf("\tTo client:   %s\n",upperBuffer);
-
-        n = write(sock, upperBuffer, strlen(upperBuffer));
-        if (n < 0) {
-            perror("ERROR WRITING TO SOCKET");
-            exit(1);
-        }
+        toClient(sock, upperBuffer);
         return 0;
     }
 }

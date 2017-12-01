@@ -1,4 +1,3 @@
-// BY Do Manh Hung - k59 - 20142062
 #include <sys/socket.h>
 #include <stdio.h>
 #include <stdlib.h>
