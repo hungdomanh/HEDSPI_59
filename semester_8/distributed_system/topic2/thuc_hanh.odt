@@ -1,0 +1,34 @@
+﻿Câu hỏi 1: Chỉ ra đường dẫn đến file html chứa nội dung của trang web mặc định của apache
+
+/var/www/html
+
+Câu hỏi 2: Cổng mặc định của giao thức http mà web server lắng nghe là cổng nào?
+
+Listen port: 80
+
+Câu hỏi 3: Phân quyền 755 nghĩa là thế nào?
+
+-  3 quyền hạn cơ bản của một user/group trên 1 file/folder:
+	+ Read giá trị là 4
+	+ Write giá trị là 2
+	+ eXecute giá trị là 1
+- 3 loại user:
+	+ User sở hữu: 7 (RWX)
+	+ User thuộc group sở hữu: 5 (RX)
+	+ Mọi user: 5 (RX)
+
+Câu hỏi 4: Sau khi gõ 2 địa chỉ trên thì bạn thấy điều gì? giải thích.
+
+- Kết quả: 
+	+ example.com: Success! The example.com virtual host is working!
+	+ test.com: Success! The test.com virtual host is working!
+- Giải thích (test.com): 
+	+ Sau khi thêm file config.
+	+ Khi ta gõ đường dẫn test.com sẽ tương ứng với việc server apache mở file var/www/test.com/public_html/index.html (DocumentRoot)
+
+Câu hỏi 5: Bây giờ muốn cho các máy khác trong cùng mạng LAN với máy tính vừa làm việc cũng truy cập được vào 2 địa chỉ example.com và test.com thì chúng ta phải làm gì? giải thích.
+
+
+
+
+
